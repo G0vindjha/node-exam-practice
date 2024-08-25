@@ -1,15 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const {productList, viewProduct, addProduct, updateProduct, deleteProduct} = require("../controller/product-controller");
+const {productList, viewProduct, addProduct, updateProduct, deleteProduct,viewImage} = require("../controller/product-controller");
 const multer = require('multer');
-const {validateResult,storage} = require("../middleware/helper-function");
+const {productValidator} = require("../middleware/validation");
+const {validateResult,userLoggedIn,storage} = require("../middleware/helper-function");
 const upload = multer({ storage: storage })
 
 
-router.get('/',productList);
-router.get('/:id',viewProduct);
-router.post('/',upload.single('productImage'),addProduct);
-router.put('/:id',upload.single('productImage'),updateProduct);
-router.delete('/:id',deleteProduct);
+router.get('/',userLoggedIn,productList);
+router.get('/:id',userLoggedIn,viewProduct);
+router.post('/',userLoggedIn,upload.single('productImage'),productValidator,validateResult,addProduct);
+router.put('/:id',userLoggedIn,upload.single('productImage'),productValidator,validateResult,updateProduct);
+router.delete('/:id',userLoggedIn,deleteProduct);
+router.get('/:id/image',userLoggedIn,viewImage);
 
 module.exports = router;

@@ -23,8 +23,13 @@ const productValidator = [
     check('productType')
         .notEmpty().withMessage("express Enter productType properly")
         .isIn(['Print Product','Promotional Product']).withMessage("express Option is incorrect"),
-    check('productImage').withMessage("express")
+    check('productImage').optional().custom(value =>{
+        if(!/\.jpeg|jpg|png|gif$/i.test(value)){
+            throw Error("Entera valid image");
+        }
+        return true;
+    }).withMessage("Enter Proper image")
 ]
 
 
-module.exports = {uservalidator,loginValidator}
+module.exports = {uservalidator,loginValidator,productValidator}

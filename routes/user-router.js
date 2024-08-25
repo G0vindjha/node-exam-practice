@@ -9,6 +9,5 @@ const {validateResult,userLoggedIn} = require("../middleware/helper-function");
 router.post('/register',upload.none(),uservalidator,validateResult,userCreate);
 router.post('/login',upload.none(),loginValidator,validateResult,userLogin);
 router.get('/logout',userLogout);
-router.get('/check',userLoggedIn);
 
 module.exports = router;
